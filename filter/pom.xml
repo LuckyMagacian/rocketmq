@@ -27,7 +27,19 @@
     <packaging>jar</packaging>
     <artifactId>rocketmq-filter</artifactId>
     <name>rocketmq-filter ${project.version}</name>
-
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <target>1.8</target>
+                    <source>1.8</source>
+                    <testTarget>1.8</testTarget>
+                    <testSource>1.8</testSource>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>

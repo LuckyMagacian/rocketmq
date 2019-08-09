@@ -48,10 +48,25 @@ public class ProducerInstance {
         return instance;
     }
 
+    /**
+     *
+     * 就是返回    $namesrvaddress_$group
+     *
+     * @param nameServerAddress
+     * @param group
+     * @return
+     */
     private String genKey(String nameServerAddress, String group) {
         return nameServerAddress + "_" + group;
     }
 
+    /**
+     * 通过namesrv地址&group提供对应的producer
+     * @param nameServerAddress
+     * @param group
+     * @return
+     * @throws MQClientException
+     */
     public MQProducer getInstance(String nameServerAddress, String group) throws MQClientException {
         if (StringUtils.isBlank(group)) {
             group = DEFAULT_GROUP;
@@ -74,6 +89,11 @@ public class ProducerInstance {
         return defaultMQProducer;
     }
 
+    /**
+     * 移除并关闭对应的MqProducer
+     * @param nameServerAddress
+     * @param group
+     */
     public void removeAndClose(String nameServerAddress, String group) {
         if (group == null) {
             group = DEFAULT_GROUP;

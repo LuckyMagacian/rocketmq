@@ -126,7 +126,8 @@
         <module>openmessaging</module>
         <module>logging</module>
         <module>acl</module>
-    </modules>
+		<module>rocketmq-learn</module>
+	</modules>
 
     <build>
         <plugins>

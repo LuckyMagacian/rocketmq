@@ -55,7 +55,7 @@ public class RemotingCommand {
     private static final String BOOLEAN_CANONICAL_NAME_2 = boolean.class.getCanonicalName();
     private static volatile int configVersion = -1;
     private static AtomicInteger requestId = new AtomicInteger(0);
-
+    //默认以json方式序列化传输
     private static SerializeType serializeTypeConfigInThisServer = SerializeType.JSON;
 
     static {

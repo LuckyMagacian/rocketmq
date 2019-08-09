@@ -26,7 +26,19 @@
     <packaging>jar</packaging>
     <artifactId>rocketmq-namesrv</artifactId>
     <name>rocketmq-namesrv ${project.version}</name>
-
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <target>1.8</target>
+                    <source>1.8</source>
+                    <testTarget>1.8</testTarget>
+                    <testSource>1.8</testSource>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <dependencies>
         <dependency>
             <groupId>org.apache.rocketmq</groupId>
