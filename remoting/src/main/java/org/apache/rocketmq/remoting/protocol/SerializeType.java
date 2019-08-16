@@ -16,7 +16,7 @@
  */
 
 package org.apache.rocketmq.remoting.protocol;
-//wmark 序列化方式 支持 JSON & RocketMq协议
+//serialize type support  JSON & RocketMq protocol
 public enum SerializeType {
     JSON((byte) 0),
     ROCKETMQ((byte) 1);

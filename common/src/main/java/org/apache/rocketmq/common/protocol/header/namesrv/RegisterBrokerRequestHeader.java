@@ -32,6 +32,10 @@ public class RegisterBrokerRequestHeader implements CommandCustomHeader {
     @CFNotNull
     private String clusterName;
     @CFNotNull
+    /**if this broker is slave,
+     * first time register is empty ,
+     * second time will be master's address !
+     * */
     private String haServerAddr;
     @CFNotNull
     private Long brokerId;
@@ -39,7 +43,7 @@ public class RegisterBrokerRequestHeader implements CommandCustomHeader {
     private boolean compressed;
 
     private Integer bodyCrc32 = 0;
-
+    @Override
     public void checkFields() throws RemotingCommandException {
     }
 

@@ -23,13 +23,12 @@ import java.util.Random;
  */
 public class MainTest {
     public static void main(String[] args) throws InterruptedException {
-        Random random=new Random();
+        Runtime.getRuntime().addShutdownHook(new Thread(()->{
+            System.err.println("shutdown !");
+        }));
         while(true){
-            int start=random.nextInt();
-            int stop=start<<10;
-            System.err.println(start+stop);
-            Thread.sleep(3000);
+            System.err.println(new Random().nextInt());
+            Thread.sleep(1000);
         }
     }
-
 }

@@ -16,7 +16,7 @@
  */
 
 package org.apache.rocketmq.remoting.protocol;
-//wmark 请求方&应答方约定的语言,rocketmq协议里用
+//server & client 's language , server is always java
 public enum LanguageCode {
     JAVA((byte) 0),
     CPP((byte) 1),

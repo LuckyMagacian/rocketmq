@@ -44,16 +44,33 @@ import org.apache.rocketmq.common.protocol.route.QueueData;
 import org.apache.rocketmq.common.protocol.route.TopicRouteData;
 import org.apache.rocketmq.common.sysflag.TopicSysFlag;
 import org.apache.rocketmq.remoting.common.RemotingUtil;
-
+//wim route info manager , contains topicQueueTable,brokderAddressTable,clusterAddrTable,brokerLiveTable,filterServerTable
 public class RouteInfoManager {
     private static final InternalLogger log = InternalLoggerFactory.getLogger(LoggerName.NAMESRV_LOGGER_NAME);
     private final static long BROKER_CHANNEL_EXPIRED_TIME = 1000 * 60 * 2;
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
-    private final HashMap<String/* topic */, List<QueueData>> topicQueueTable;
-    private final HashMap<String/* brokerName */, BrokerData> brokerAddrTable;
-    private final HashMap<String/* clusterName */, Set<String/* brokerName */>> clusterAddrTable;
-    private final HashMap<String/* brokerAddr */, BrokerLiveInfo> brokerLiveTable;
-    private final HashMap<String/* brokerAddr */, List<String>/* Filter Server */> filterServerTable;
+    /**
+     * key=topic
+     */
+    private final HashMap<String, List<QueueData>> topicQueueTable;
+    /**
+     * key=brokerName
+     */
+    private final HashMap<String, BrokerData> brokerAddrTable;
+    /**
+     * key=clusterName
+     * value=brokerNameSet
+     */
+    private final HashMap<String, Set<String>> clusterAddrTable;
+    /**
+     * key=brokerAddress
+     */
+    private final HashMap<String, BrokerLiveInfo> brokerLiveTable;
+    /**
+     * key=brokerAddress
+     * value=filterServerList
+     */
+    private final HashMap<String, List<String>> filterServerTable;
 
     public RouteInfoManager() {
         this.topicQueueTable = new HashMap<String, List<QueueData>>(1024);
@@ -431,6 +448,7 @@ public class RouteInfoManager {
         while (it.hasNext()) {
             Entry<String, BrokerLiveInfo> next = it.next();
             long last = next.getValue().getLastUpdateTimestamp();
+            /**if last broker register time less then (System.currentTimeMillis()-$expireTime),channel will be destroy !*/
             if ((last + BROKER_CHANNEL_EXPIRED_TIME) < System.currentTimeMillis()) {
                 RemotingUtil.closeChannel(next.getValue().getChannel());
                 it.remove();
