@@ -24,9 +24,12 @@ import org.apache.rocketmq.common.protocol.route.QueueData;
 import org.apache.rocketmq.common.protocol.route.TopicRouteData;
 
 public class TopicPublishInfo {
+    //whither is order topic
     private boolean orderTopic = false;
     private boolean haveTopicRouterInfo = false;
+    //defalut 4 queue
     private List<MessageQueue> messageQueueList = new ArrayList<MessageQueue>();
+    //used by selectOneMessageQueue
     private volatile ThreadLocalIndex sendWhichQueue = new ThreadLocalIndex();
     private TopicRouteData topicRouteData;
 

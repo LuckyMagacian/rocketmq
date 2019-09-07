@@ -2,8 +2,12 @@ package top.whiteyang.rocketmq.learn.test;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Random;
 import org.apache.rocketmq.common.MixAll;
 import org.apache.rocketmq.common.namesrv.NamesrvConfig;
 import org.apache.rocketmq.namesrv.NamesrvStartup;
@@ -35,6 +39,27 @@ import java.util.UUID;
  * time: 2019-08-06 16:45
  */
 public class EchoTest {
+    @Test
+    public void collecitonsShuffle(){
+        List<Integer> list = new ArrayList<>();
+        Random random=new Random();
+        for(int i=0;i<20;i++){
+            list.add(random.nextInt(1000));
+        }
+        System.err.println(list);
+        Collections.shuffle(list);
+        System.err.println(list);
+        Collections.sort(list);
+        System.err.println(list);
+        Collections.shuffle(list);
+        System.err.println(list);
+    }
+    @Test
+    public void echoPID(){
+        System.err.println(ManagementFactory.getRuntimeMXBean().getName());
+        System.err.println(ManagementFactory.getMemoryMXBean().getHeapMemoryUsage());
+        System.err.println(ManagementFactory.getMemoryMXBean().getNonHeapMemoryUsage());
+    }
 
     @Test
     public void test(){

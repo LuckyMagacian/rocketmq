@@ -1,0 +1,17 @@
+@startuml
+'配置皮肤'
+skinparam SequenceLifeLineBackgroundColor #eb8f34
+skinparam ActorBorderColor #000
+skinparam ParticipantBorderColor #000
+skinparam ParticipantBackgroundColor #fff
+skinparam ArrowColor #000
+skinparam handwrite false
+skinparam SequenceLifeLineBorderColor #000
+scale 0.8
+'时序'
+
+group register broker
+
+end
+
+@enduml

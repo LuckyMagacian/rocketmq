@@ -21,12 +21,25 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.rocketmq.common.sysflag.MessageSysFlag;
 
+//wim message
 public class Message implements Serializable {
     private static final long serialVersionUID = 8445773977080406428L;
 
     private String topic;
+    /**message flag will not be changed {@link MessageSysFlag}*/
     private int flag;
+    /**
+     * message expand properties
+     * tag: message tag
+     * keys: message index key , mutipe split by space
+     * DELAY: delay message's delay level
+     * INSTANCE_ID: rocketmq's instance id
+     * WAIT: wether wait store message ok
+     * .....
+     *
+     */
     private Map<String, String> properties;
     private byte[] body;
     private String transactionId;

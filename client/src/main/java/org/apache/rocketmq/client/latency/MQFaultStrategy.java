@@ -69,7 +69,7 @@ public class MQFaultStrategy {
                             return mq;
                     }
                 }
-
+                //if total broker is not avaliable , then whill chose one , order by available() , currentLatency , (not avaliable time + latency duration)
                 final String notBestBroker = latencyFaultTolerance.pickOneAtLeast();
                 int writeQueueNums = tpInfo.getQueueIdByBroker(notBestBroker);
                 if (writeQueueNums > 0) {

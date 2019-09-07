@@ -72,6 +72,7 @@ public class LatencyFaultToleranceImpl implements LatencyFaultTolerance<String> 
         }
 
         if (!tmpList.isEmpty()) {
+            /**why shuffle then sort ? why not sort directly*/
             Collections.shuffle(tmpList);
 
             Collections.sort(tmpList);
@@ -99,6 +100,7 @@ public class LatencyFaultToleranceImpl implements LatencyFaultTolerance<String> 
     class FaultItem implements Comparable<FaultItem> {
         private final String name;
         private volatile long currentLatency;
+        // maybe available start time , not fault start time
         private volatile long startTimestamp;
 
         public FaultItem(final String name) {
