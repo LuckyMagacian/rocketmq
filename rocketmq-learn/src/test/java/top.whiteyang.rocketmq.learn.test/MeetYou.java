@@ -2,6 +2,7 @@ package top.whiteyang.rocketmq.learn.test;
 
 import org.apache.rocketmq.broker.BrokerController;
 import org.apache.rocketmq.broker.out.BrokerOuterAPI;
+import org.apache.rocketmq.broker.processor.SendMessageProcessor;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.impl.MQClientAPIImpl;
 import org.apache.rocketmq.client.impl.MQClientManager;
@@ -57,6 +58,9 @@ public class MeetYou {
         BrokerController brokerController;
         //in charge to register|unregister broker
         BrokerOuterAPI brokerOuterAPI;
+        // default send message request processor
+        SendMessageProcessor sendMessageProcessor;
+
         /**-------------------------------------------------------------------------------common-------------------------------------------------------------------------------------------------*/
         //message
         Message message;
