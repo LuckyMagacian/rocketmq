@@ -17,6 +17,7 @@ import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.common.MixAll;
 import org.apache.rocketmq.common.ThreadFactoryImpl;
 import org.apache.rocketmq.common.message.Message;
+import org.apache.rocketmq.common.message.MessageDecoder;
 import org.apache.rocketmq.common.namesrv.NamesrvConfig;
 import org.apache.rocketmq.common.protocol.route.BrokerData;
 import org.apache.rocketmq.common.protocol.route.TopicRouteData;
@@ -28,6 +29,9 @@ import org.apache.rocketmq.remoting.netty.NettyDecoder;
 import org.apache.rocketmq.remoting.netty.NettyRemotingClient;
 import org.apache.rocketmq.remoting.netty.NettyRemotingServer;
 import org.apache.rocketmq.remoting.netty.NettyServerConfig;
+import org.apache.rocketmq.store.CommitLog;
+import org.apache.rocketmq.store.ConsumeQueue;
+import org.apache.rocketmq.store.index.IndexFile;
 
 /**
  * Today the best performance as tomorrow newest starter!
@@ -56,6 +60,9 @@ public class MeetYou {
         MixAll mixAll;
         //hold topicTable & brokerTable & brokerClusterTable & brokerAliveTable & filterServerTable | register broker & unregister broker
         RouteInfoManager routeInfoManager;
+
+
+
         /**-------------------------------------------------------------------------------broker-------------------------------------------------------------------------------------------------*/
         //broker's startup
         BrokerStartup brokerStartup;
@@ -75,6 +82,11 @@ public class MeetYou {
          * NettyRemotingServer.NettyServerHandler
          */
 
+        CommitLog commitLog;
+        ConsumeQueue consumeQueue;
+        IndexFile indexFile;
+
+
         /**-------------------------------------------------------------------------------common-------------------------------------------------------------------------------------------------*/
         //message
         Message message;
@@ -84,6 +96,8 @@ public class MeetYou {
         TopicRouteData topicRouteData;
         //
         BrokerData brokerData;
+        //encode Message -> byte[]  or decode byte[] ->Message
+        MessageDecoder messageDecoder;
         /**-------------------------------------------------------------------------------client-------------------------------------------------------------------------------------------------*/
         //single , manage MQClientInstance
         MQClientManager mqClientManager;
@@ -101,6 +115,15 @@ public class MeetYou {
         DefaultMQProducerImpl defaultMQProducerImpl;
         // fault avoid strategy
         MQFaultStrategy mqFaultStrategy;
+
+
+
+
+
+
+
+
+
         /**---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
         defaultMQProducer.send(new Message());
         defaultMQProducer.sendOneway(new Message());
