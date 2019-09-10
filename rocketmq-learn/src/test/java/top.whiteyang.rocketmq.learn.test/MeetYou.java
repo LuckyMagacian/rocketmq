@@ -1,6 +1,7 @@
 package top.whiteyang.rocketmq.learn.test;
 
 import org.apache.rocketmq.broker.BrokerController;
+import org.apache.rocketmq.broker.BrokerStartup;
 import org.apache.rocketmq.broker.out.BrokerOuterAPI;
 import org.apache.rocketmq.broker.processor.SendMessageProcessor;
 import org.apache.rocketmq.client.exception.MQClientException;
@@ -23,7 +24,9 @@ import org.apache.rocketmq.namesrv.NamesrvController;
 import org.apache.rocketmq.namesrv.NamesrvStartup;
 import org.apache.rocketmq.namesrv.processor.DefaultRequestProcessor;
 import org.apache.rocketmq.namesrv.routeinfo.RouteInfoManager;
+import org.apache.rocketmq.remoting.netty.NettyDecoder;
 import org.apache.rocketmq.remoting.netty.NettyRemotingClient;
+import org.apache.rocketmq.remoting.netty.NettyRemotingServer;
 import org.apache.rocketmq.remoting.netty.NettyServerConfig;
 
 /**
@@ -54,12 +57,23 @@ public class MeetYou {
         //hold topicTable & brokerTable & brokerClusterTable & brokerAliveTable & filterServerTable | register broker & unregister broker
         RouteInfoManager routeInfoManager;
         /**-------------------------------------------------------------------------------broker-------------------------------------------------------------------------------------------------*/
+        //broker's startup
+        BrokerStartup brokerStartup;
         //broker core controller
         BrokerController brokerController;
         //in charge to register|unregister broker
         BrokerOuterAPI brokerOuterAPI;
         // default send message request processor
         SendMessageProcessor sendMessageProcessor;
+        //hold ServerBootstrap , responsible to communicat with netty
+        NettyRemotingServer nettyRemotingServer;
+        //convert ByteBuf to RemotingCommand
+        NettyDecoder nettyDecoder;
+
+        /**    private inner class
+         * deal all request by RequestProcessor
+         * NettyRemotingServer.NettyServerHandler
+         */
 
         /**-------------------------------------------------------------------------------common-------------------------------------------------------------------------------------------------*/
         //message
