@@ -11,7 +11,6 @@ import org.apache.rocketmq.client.impl.factory.MQClientInstance;
 import org.apache.rocketmq.client.impl.producer.DefaultMQProducerImpl;
 import org.apache.rocketmq.client.impl.producer.TopicPublishInfo;
 import org.apache.rocketmq.client.latency.LatencyFaultTolerance;
-import org.apache.rocketmq.client.latency.LatencyFaultToleranceImpl;
 import org.apache.rocketmq.client.latency.MQFaultStrategy;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.common.MixAll;
@@ -29,8 +28,10 @@ import org.apache.rocketmq.remoting.netty.NettyDecoder;
 import org.apache.rocketmq.remoting.netty.NettyRemotingClient;
 import org.apache.rocketmq.remoting.netty.NettyRemotingServer;
 import org.apache.rocketmq.remoting.netty.NettyServerConfig;
+import org.apache.rocketmq.remoting.protocol.RemotingCommand;
 import org.apache.rocketmq.store.CommitLog;
 import org.apache.rocketmq.store.ConsumeQueue;
+import org.apache.rocketmq.store.DefaultMessageStore;
 import org.apache.rocketmq.store.index.IndexFile;
 
 /**
@@ -61,8 +62,6 @@ public class MeetYou {
         //hold topicTable & brokerTable & brokerClusterTable & brokerAliveTable & filterServerTable | register broker & unregister broker
         RouteInfoManager routeInfoManager;
 
-
-
         /**-------------------------------------------------------------------------------broker-------------------------------------------------------------------------------------------------*/
         //broker's startup
         BrokerStartup brokerStartup;
@@ -81,12 +80,6 @@ public class MeetYou {
          * deal all request by RequestProcessor
          * NettyRemotingServer.NettyServerHandler
          */
-
-        CommitLog commitLog;
-        ConsumeQueue consumeQueue;
-        IndexFile indexFile;
-
-
         /**-------------------------------------------------------------------------------common-------------------------------------------------------------------------------------------------*/
         //message
         Message message;
@@ -96,7 +89,9 @@ public class MeetYou {
         TopicRouteData topicRouteData;
         //
         BrokerData brokerData;
-        //encode Message -> byte[]  or decode byte[] ->Message
+        // command
+        RemotingCommand remotingCommand;
+        //encode Message -> byte[]  or decode byte[] -> Message
         MessageDecoder messageDecoder;
         /**-------------------------------------------------------------------------------client-------------------------------------------------------------------------------------------------*/
         //single , manage MQClientInstance
@@ -115,6 +110,23 @@ public class MeetYou {
         DefaultMQProducerImpl defaultMQProducerImpl;
         // fault avoid strategy
         MQFaultStrategy mqFaultStrategy;
+
+
+        /**-------------------------------------------------------------------------------store-------------------------------------------------------------------------------------------------*/
+
+        CommitLog commitLog;
+
+        ConsumeQueue consumeQueue;
+
+        IndexFile indexFile;
+        //
+        DefaultMessageStore defaultMessageStore;
+
+
+
+
+
+
 
 
 

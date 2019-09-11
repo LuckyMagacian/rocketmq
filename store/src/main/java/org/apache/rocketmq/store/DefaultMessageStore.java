@@ -65,9 +65,17 @@ public class DefaultMessageStore implements MessageStore {
     private final MessageStoreConfig messageStoreConfig;
     // CommitLog
     private final CommitLog commitLog;
-
+    /**
+     * {
+     *     $topic:{
+     *         $queueId: queue
+     *     }
+     *
+     * }
+     */
     private final ConcurrentMap<String/* topic */, ConcurrentMap<Integer/* queueId */, ConsumeQueue>> consumeQueueTable;
 
+    //flush consume queue to disk
     private final FlushConsumeQueueService flushConsumeQueueService;
 
     private final CleanCommitLogService cleanCommitLogService;

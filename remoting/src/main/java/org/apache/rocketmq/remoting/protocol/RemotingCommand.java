@@ -73,6 +73,7 @@ public class RemotingCommand {
     private LanguageCode language = LanguageCode.JAVA;
     private int version = 0;
     private int opaque = requestId.getAndIncrement();
+    //bit, final bit means requset 0 ,response 1   , second last means 1 oneway
     private int flag = 0;
     private String remark;
     private HashMap<String, String> extFields;
