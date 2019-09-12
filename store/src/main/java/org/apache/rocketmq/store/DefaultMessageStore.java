@@ -89,7 +89,7 @@ public class DefaultMessageStore implements MessageStore {
     private final ReputMessageService reputMessageService;
 
     private final HAService haService;
-
+    //
     private final ScheduleMessageService scheduleMessageService;
 
     private final StoreStatsService storeStatsService;
@@ -364,13 +364,11 @@ public class DefaultMessageStore implements MessageStore {
             log.warn("message store has shutdown, so putMessage is forbidden");
             return new PutMessageResult(PutMessageStatus.SERVICE_NOT_AVAILABLE, null);
         }
-
         if (BrokerRole.SLAVE == this.messageStoreConfig.getBrokerRole()) {
             long value = this.printTimes.getAndIncrement();
             if ((value % 50000) == 0) {
                 log.warn("message store is slave mode, so putMessage is forbidden ");
             }
-
             return new PutMessageResult(PutMessageStatus.SERVICE_NOT_AVAILABLE, null);
         }
 
@@ -379,7 +377,6 @@ public class DefaultMessageStore implements MessageStore {
             if ((value % 50000) == 0) {
                 log.warn("message store is not writeable, so putMessage is forbidden " + this.runningFlags.getFlagBits());
             }
-
             return new PutMessageResult(PutMessageStatus.SERVICE_NOT_AVAILABLE, null);
         } else {
             this.printTimes.set(0);

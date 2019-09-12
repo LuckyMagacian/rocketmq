@@ -39,7 +39,8 @@ import org.apache.rocketmq.store.index.IndexFile;
  *
  * Created by IntelliJ IDEA.
  *
- * @author : whiteyang email: yangyuanjian@souche.com time: 2019-08-15 10:07
+ * @author : whiteyang
+ * @email: yangyuanjian@souche.com time: 2019-08-15 10:07
  */
 public class MeetYou {
     int num;

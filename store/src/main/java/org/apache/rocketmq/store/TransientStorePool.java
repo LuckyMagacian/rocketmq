@@ -48,6 +48,7 @@ public class TransientStorePool {
      */
     public void init() {
         for (int i = 0; i < poolSize; i++) {
+            //is direct buffer
             ByteBuffer byteBuffer = ByteBuffer.allocateDirect(fileSize);
 
             final long address = ((DirectBuffer) byteBuffer).address();

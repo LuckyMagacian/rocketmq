@@ -652,6 +652,7 @@ public class CommitLog {
             if (messageExt.isWaitStoreMsgOK()) {
                 GroupCommitRequest request = new GroupCommitRequest(result.getWroteOffset() + result.getWroteBytes());
                 service.putRequest(request);
+                //block by CountDownLatch
                 boolean flushOK = request.waitForFlush(this.defaultMessageStore.getMessageStoreConfig().getSyncFlushTimeout());
                 if (!flushOK) {
                     log.error("do groupcommit, wait for flush failed, topic: " + messageExt.getTopic() + " tags: " + messageExt.getTags()
@@ -1191,7 +1192,7 @@ public class CommitLog {
             return msgStoreItemMemory;
         }
 
-        public AppendMessageResult doAppend(final long fileFromOffset, final ByteBuffer byteBuffer, final int maxBlank,
+        public AppendMessageResult doAppend(final long fileFromOffset, final ByteBuffer byteBuffer,/**file can write size*/ final int maxBlank,
             final MessageExtBrokerInner msgInner) {
             // STORETIMESTAMP + STOREHOSTADDRESS + OFFSET <br>
 

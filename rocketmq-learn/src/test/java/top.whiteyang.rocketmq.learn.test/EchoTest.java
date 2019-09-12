@@ -2,9 +2,11 @@ package top.whiteyang.rocketmq.learn.test;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import io.netty.util.CharsetUtil;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
@@ -90,5 +92,19 @@ public class EchoTest {
     @Test
     public void test2() throws UnknownHostException {
         System.err.println(InetAddress.getLocalHost().getHostName());
+    }
+
+    @Test
+    public void testByteBuffer(){
+        ByteBuffer buffer = ByteBuffer.allocate(64);
+        buffer.put("12345".getBytes(CharsetUtil.UTF_8));
+        buffer.flip();
+        buffer.rewind();
+        buffer.get();
+        buffer.get();
+        buffer.mark();
+        buffer.clear();
+        buffer.reset();
+        ByteBuffer slice = buffer.slice();
     }
 }

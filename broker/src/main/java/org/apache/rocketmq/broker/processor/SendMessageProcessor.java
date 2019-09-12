@@ -251,6 +251,15 @@ public class SendMessageProcessor extends AbstractSendMessageProcessor implement
         return response;
     }
 
+    /**
+     * deal retry message or message from dead letter queue
+     * @param requestHeader
+     * @param response
+     * @param request
+     * @param msg
+     * @param topicConfig
+     * @return
+     */
     private boolean handleRetryAndDLQ(SendMessageRequestHeader requestHeader, RemotingCommand response,
                                       RemotingCommand request,
                                       MessageExt msg, TopicConfig topicConfig) {
