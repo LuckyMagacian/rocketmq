@@ -39,6 +39,11 @@ public class WaitNotifyObject {
         }
     }
 
+    /**
+     * if hasNotified then invoke onWaitEnd
+     * else wait $interval milliseconds
+     * @param interval
+     */
     protected void waitForRunning(long interval) {
         synchronized (this) {
             if (this.hasNotified) {

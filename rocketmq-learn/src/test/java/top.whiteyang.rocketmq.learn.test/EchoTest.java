@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import io.netty.util.CharsetUtil;
 import java.lang.management.ManagementFactory;
+import java.lang.reflect.Field;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
@@ -15,6 +16,7 @@ import org.apache.rocketmq.common.namesrv.NamesrvConfig;
 import org.apache.rocketmq.namesrv.NamesrvStartup;
 import org.apache.rocketmq.remoting.netty.NettyServerConfig;
 import org.junit.Test;
+import sun.misc.Unsafe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,24 @@ import java.util.UUID;
  * time: 2019-08-06 16:45
  */
 public class EchoTest {
+    private static Unsafe unsafe;
+    static {
+        try {
+            Field field = Unsafe.class.getDeclaredField("theUnsafe");
+            field.setAccessible(true);
+            unsafe = (Unsafe) field.get(Unsafe.class);
+
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    @Test
+    public void echoOffset() throws NoSuchFieldException {
+        System.err.println(unsafe.objectFieldOffset(TestBean.class.getDeclaredField("name")));
+    }
+
     @Test
     public void collecitonsShuffle(){
         List<Integer> list = new ArrayList<>();

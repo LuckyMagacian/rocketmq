@@ -42,8 +42,9 @@ public class MappedFileQueue {
     private final CopyOnWriteArrayList<MappedFile> mappedFiles = new CopyOnWriteArrayList<MappedFile>();
 
     private final AllocateMappedFileService allocateMappedFileService;
-
+    //means offset<flushedWhere has been flushed to disk
     private long flushedWhere = 0;
+    //memeory commit offset
     private long committedWhere = 0;
 
     private volatile long storeTimestamp = 0;
@@ -74,6 +75,11 @@ public class MappedFileQueue {
         }
     }
 
+    /**
+     * return last modified time >= $timestamp  if null then return the last one
+     * @param timestamp
+     * @return
+     */
     public MappedFile getMappedFileByTime(final long timestamp) {
         Object[] mfs = this.copyMappedFiles(0);
 
@@ -285,6 +291,10 @@ public class MappedFileQueue {
         return true;
     }
 
+    /**
+     * return the oldest mappedFile's from offset
+     * @return
+     */
     public long getMinOffset() {
 
         if (!this.mappedFiles.isEmpty()) {
@@ -299,6 +309,10 @@ public class MappedFileQueue {
         return -1;
     }
 
+    /**
+     * return the newest mappedFile's from offset + mappedFile's read position
+     * @return
+     */
     public long getMaxOffset() {
         MappedFile mappedFile = getLastMappedFile();
         if (mappedFile != null) {
@@ -307,6 +321,10 @@ public class MappedFileQueue {
         return 0;
     }
 
+    /**
+     * return the newest mappedFile's from offset + mappedFile's write position
+     * @return
+     */
     public long getMaxWrotePosition() {
         MappedFile mappedFile = getLastMappedFile();
         if (mappedFile != null) {

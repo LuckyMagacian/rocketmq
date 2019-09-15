@@ -29,10 +29,11 @@ import org.apache.rocketmq.remoting.netty.NettyRemotingClient;
 import org.apache.rocketmq.remoting.netty.NettyRemotingServer;
 import org.apache.rocketmq.remoting.netty.NettyServerConfig;
 import org.apache.rocketmq.remoting.protocol.RemotingCommand;
-import org.apache.rocketmq.store.CommitLog;
-import org.apache.rocketmq.store.ConsumeQueue;
-import org.apache.rocketmq.store.DefaultMessageStore;
+import org.apache.rocketmq.store.*;
 import org.apache.rocketmq.store.index.IndexFile;
+
+import java.util.concurrent.locks.AbstractQueuedSynchronizer;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Today the best performance as tomorrow newest starter!
@@ -94,6 +95,9 @@ public class MeetYou {
         RemotingCommand remotingCommand;
         //encode Message -> byte[]  or decode byte[] -> Message
         MessageDecoder messageDecoder;
+
+        AbstractQueuedSynchronizer abstractQueuedSynchronizer;
+        ReentrantLock reentrantLock;
         /**-------------------------------------------------------------------------------client-------------------------------------------------------------------------------------------------*/
         //single , manage MQClientInstance
         MQClientManager mqClientManager;
@@ -114,8 +118,19 @@ public class MeetYou {
 
 
         /**-------------------------------------------------------------------------------store-------------------------------------------------------------------------------------------------*/
-
+        //deal delay message , flush disk , sync slave
         CommitLog commitLog;
+        //map memory to filechannle or direct memory , write message byte[] to memory
+        MappedFile mappedFile;
+        //container of mappedFile, map directory of mapped file
+        MappedFileQueue mappedFileQueue;
+        /**
+         * private inner class
+         * CommitLog.FlushCommitLogService
+         */
+
+        //direct byte buffer pool, cache pool , avoid GC
+        TransientStorePool transientStorePool;
 
         ConsumeQueue consumeQueue;
 

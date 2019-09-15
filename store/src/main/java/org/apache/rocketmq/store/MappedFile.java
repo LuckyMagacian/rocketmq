@@ -54,13 +54,16 @@ public class MappedFile extends ReferenceResource {
     protected int fileSize;
     protected FileChannel fileChannel;
     /**
-     * Message will put to here first, and then reput to FileChannel if writeBuffer is not null.
+     * Message will put to here first, and then commit to FileChannel if writeBuffer is not null.
+     *
+     * buffer is direct memory and borrowed from pool
      */
     protected ByteBuffer writeBuffer = null;
     protected TransientStorePool transientStorePool = null;
     private String fileName;
     private long fileFromOffset;
     private File file;
+    /**map to file channel*/
     private MappedByteBuffer mappedByteBuffer;
     private volatile long storeTimestamp = 0;
     private boolean firstCreateInQueue = false;
